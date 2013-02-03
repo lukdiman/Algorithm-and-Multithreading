@@ -73,9 +73,10 @@ class HighArray {
         if (j == nElems) {
             return false;
         } else {
-            for (int k = j; j < nElems - 1; k++) {
+            for (int k = j; k < nElems - 1; k++) {
                 a[k] = a[k+1];
             }
+            nElems--;
 
             return true;
         }
