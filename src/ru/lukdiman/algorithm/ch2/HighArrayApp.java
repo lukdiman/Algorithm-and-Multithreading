@@ -25,11 +25,26 @@ public class HighArrayApp {
             System.out.println("Can't find " + searchKey);
         }
 
+        long maxValue = arr.removeMax();
+        System.out.println("Максимальное значение массива до удаления элементов: " + maxValue);
+
         arr.delete(00);
         arr.delete(55);
         arr.delete(99);
 
         arr.display();
+
+        maxValue = arr.removeMax();
+        System.out.println("Максимальное значение массива после удаления элементов: " + maxValue);
+
+        arr.display();
+
+        HighArray sortedArray = new HighArray(maxSize);
+        long elem;
+        while((elem = arr.removeMax()) != -1) {
+            sortedArray.insert(elem);
+        }
+        sortedArray.display();
     }
 }
 
@@ -60,6 +75,26 @@ class HighArray {
         } else {
             return true;
         }
+    }
+
+    public long removeMax() {
+        if (nElems == 0) { return -1; }
+
+        int indexForRemove = 0;
+        long maxValue = a[indexForRemove];
+        for (int i = 1; i < nElems; i++) {
+            if (a[i] > maxValue) {
+                maxValue = a[i];
+                indexForRemove = i;
+            }
+        }
+
+        for (int i = indexForRemove; i < nElems-1; i++) {
+            a[i] = a[i+1];
+        }
+        nElems--;
+
+        return maxValue;
     }
 
     public boolean delete(long value) {

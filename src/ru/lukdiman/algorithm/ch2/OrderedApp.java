@@ -16,7 +16,9 @@ public class OrderedApp {
         arr.insert(66);
         arr.insert(33);
 
-        int searchKey = 55;
+        arr.display();
+
+        int searchKey = 56;
         if (arr.find(searchKey) != arr.size()) {
             System.out.println("Found " + searchKey);
         } else {
@@ -36,6 +38,8 @@ public class OrderedApp {
 class OrdArray {
     private long[] a;
     private int nElems;
+    private int upperBound;
+    private int lowerBound;
 
     public OrdArray(int size) {
         a = new long[size];
@@ -47,10 +51,9 @@ class OrdArray {
     }
 
     public int find(long searchKey) {
-        int lowerBound = 0;
-        int upperBound = nElems-1;
         int curIn;
-
+        lowerBound = 0;
+        upperBound = nElems-1;
         while (true) {
             curIn = (lowerBound + upperBound) / 2;
             if (a[curIn] == searchKey) {
@@ -68,18 +71,19 @@ class OrdArray {
     }
 
     public void insert(long value) {
-        int j;
-        for (j = 0; j < nElems; j++) {
-            if (a[j] > value) {
-                break;
-            }
+        if (nElems == 0) {
+            a[nElems] = value;
+            nElems++;
+            return;
         }
 
-        for (int k = nElems; k > j; k--) {
-            a[k] = a[k-1];
-        }
+        int foundIndex = find(value);
+        if (foundIndex != nElems) { return; }
 
-        a[j] = value;
+        for (int i = nElems; i > upperBound; i++) {
+            a[i] = a[i-1];
+        }
+        a[upperBound] = value;
         nElems++;
     }
 
