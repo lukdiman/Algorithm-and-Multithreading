@@ -32,6 +32,14 @@ public class OrderedApp {
         arr.delete(99);
 
         arr.display();
+
+        OrdArray newArr = new OrdArray(maxSize);
+        newArr.insert(10);
+        newArr.insert(20);
+        newArr.insert(30);
+        newArr.insert(40);
+        newArr.merge(arr);
+        newArr.display();
     }
 }
 
@@ -71,19 +79,13 @@ class OrdArray {
     }
 
     public void insert(long value) {
-        if (nElems == 0) {
-            a[nElems] = value;
-            nElems++;
-            return;
-        }
-
         int foundIndex = find(value);
         if (foundIndex != nElems) { return; }
 
-        for (int i = nElems; i > upperBound; i++) {
+        for (int i = nElems; i > lowerBound; i--) {
             a[i] = a[i-1];
         }
-        a[upperBound] = value;
+        a[lowerBound] = value;
         nElems++;
     }
 
@@ -99,6 +101,19 @@ class OrdArray {
         nElems--;
 
         return true;
+    }
+
+    public void merge(OrdArray arr) {
+        for (int i = 0; i < arr.nElems; i++) {
+            int foundIndex = find(arr.a[i]);
+            if (foundIndex != nElems) { continue; }
+
+            for (int j = nElems; j > lowerBound; j--) {
+                a[j] = a[j-1];
+            }
+            a[lowerBound] = arr.a[i];
+            nElems++;
+        }
     }
 
     public void display() {

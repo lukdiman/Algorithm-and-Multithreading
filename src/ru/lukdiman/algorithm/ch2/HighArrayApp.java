@@ -13,8 +13,16 @@ public class HighArrayApp {
         arr.insert(88);
         arr.insert(11);
         arr.insert(00);
+        arr.insert(22);
+        arr.insert(66);
         arr.insert(66);
         arr.insert(33);
+        arr.insert(77);
+        arr.insert(77);
+
+        arr.display();
+
+        arr.noDups();
 
         arr.display();
 
@@ -114,6 +122,27 @@ class HighArray {
             nElems--;
 
             return true;
+        }
+    }
+
+    public void noDups() {
+        for (int i = 0; i < nElems; i++) {
+            long currentElem = a[i];
+
+            for (int j = nElems-1; j > i; j--) {
+                if (a[j] == currentElem) {
+                    a[j] = Long.MIN_VALUE;
+                }
+            }
+        }
+
+        for (int i = nElems-1; i >= 0; i--) {
+            if (a[i] == Long.MIN_VALUE) {
+                for (int j = i; j < nElems-1; j++) {
+                    a[j] = a[j+1];
+                }
+                nElems--;
+            }
         }
     }
 
